@@ -177,12 +177,11 @@ double* Matrix::operator[](int i)
     }
     return mat[i];
 }
+
 const double* Matrix::operator[](int i) const {
-    if (i < 0 || i >= rows) {
-        throw "Row index out of bounds.";
-    }
-    return mat[i];
+    return const_cast<double*>(static_cast<const Matrix&>(*this)[i]);
 }
+
 Matrix Matrix::operator+(const Matrix &m) const {
     return this->sumMatrix(m);
 }
