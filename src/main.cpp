@@ -6,64 +6,114 @@ using std::cin;
 using std::endl;
 using std::cerr;
 
-int main()
-{
-    try {
-        //The user must enter the entries
-        int rows, columns, rows2, columns2;
-        cout << "Enter the number of rows for the matrix 1: ";
-        if(!(cin >> rows)) throw "Invalid input for rows.";
-        cout << "Enter the number of columns for the matrix 1: ";
-        if(!(cin >> columns)) throw "Invalid input for columns.";
-        Matrix m1(rows, columns);
-        m1.capture();
+void displayMenu() {
+    cout << "\n--- C++ MATRIX CLASS TEST SUITE ---" << endl;
+    cout << "1.  Enter/Overwrite Matrices (m1 & m2)" << endl;
+    cout << "2.  Show Current Matrices" << endl;
+    cout << "3.  Addition (m1 + m2)" << endl;
+    cout << "4.  Subtraction (m1 - m2)" << endl;
+    cout << "5.  Matrix Multiplication (m1 * m2)" << endl;
+    cout << "6.  Scalar Multiplication (k * m1)" << endl;
+    cout << "7.  Transpose of m1" << endl;
+    cout << "8.  Inverse of m1 (Square matrices only)" << endl;
+    cout << "9.  Resize m1" << endl;
+    cout << "10. Test Assignment and Copy (Deep Copy Test)" << endl;
+    cout << "0.  Exit" << endl;
+    cout << "Select an option: ";
+}
 
-        cout << "Enter the number of rows for the matrix 2: ";
-        if(!(cin >> rows2)) throw "Invalid input for rows.";
-        cout << "Enter the number of columns for the matrix 2: ";
-        if(!(cin >> columns2)) throw "Invalid input for columns.";
-        Matrix m2(rows2, columns2);
-        m2.capture();
-        //a
-        cout << m1 << endl;
-        cout << m2 << endl;
+int main() {
+    // Initializing with default values
+    Matrix m1(2, 2), m2(2, 2);
+    int choice;
+    double scalar;
+    int r, c;
 
-        // Try resizing the first matrix
-        cout << "Resizing matrix 1 to 2x2...\n";
-        m1.resize(2, 2);
-        cout << m1 << endl;
+    do {
+        displayMenu();
+        if (!(cin >> choice)) {
+            cerr << "Invalid menu input." << endl;
+            break;
+        }
 
-        //Try Sum matrix
-        Matrix sum = m1 + m2;
-        cout << "Sum matrix:" << endl << sum << endl;
+        try {
+            switch (choice) {
+                case 1:
+                    cout << "Configuring Matrix 1:" << endl;
+                    cout << "Rows: "; cin >> r; cout << "Cols: "; cin >> c;
+                    m1.resize(r, c);
+                    cin >> m1;
+                    
+                    cout << "Configuring Matrix 2:" << endl;
+                    cout << "Rows: "; cin >> r; cout << "Cols: "; cin >> c;
+                    m2.resize(r, c);
+                    cin >> m2;
+                    break;
 
-        //Try subtraction matrix
-        Matrix subtraction = m1 - m2;
-        cout << "Subtraction matrix:" << endl << subtraction << endl;
+                case 2:
+                    cout << "Matrix 1:\n" << m1 << endl;
+                    cout << "Matrix 2:\n" << m2 << endl;
+                    break;
 
+                case 3:
+                    cout << "Result (m1 + m2):\n" << (m1 + m2) << endl;
+                    break;
 
-        //Try Product of two matrices
-        Matrix product = m1 * m2;
-        cout << "Product matrix:" << endl << product << endl;
+                case 4:
+                    cout << "Result (m1 - m2):\n" << (m1 - m2) << endl;
+                    break;
 
-        //Try transpose of matrices
-        Matrix transpose = m1.transpose();
-        cout << "Transpose matrix:" << endl << transpose << endl;
+                case 5:
+                    cout << "Result (m1 * m2):\n" << (m1 * m2) << endl;
+                    break;
 
-        //Try inverse of matrice
-        Matrix inverse = m2.inverse();
-        cout << "Inverse matrix:" << endl << inverse << endl;
+                case 6:
+                    cout << "Enter scalar value: ";
+                    cin >> scalar;
+                    cout << "Result (" << scalar << " * m1):\n" << (scalar * m1) << endl;
+                    break;
 
-        //Ahora probar el producto escalar
-        double escalar = 2;
-        Matrix escalarM = escalar * m1;
-        cout << "Escalar matrix:" << endl << escalarM << endl;
+                case 7:
+                    cout << "Transpose of m1:\n" << m1.transpose() << endl;
+                    break;
 
+                case 8:
+                    cout << "Inverse of m1:\n" << m1.inverse() << endl;
+                    break;
 
-    } catch(const char* msg) {
-        cerr << "Error: " << msg << endl;
+                case 9:
+                    cout << "Enter new dimensions for m1 (Rows Cols): ";
+                    cin >> r >> c;
+                    m1.resize(r, c);
+                    cout << "Resized Matrix 1:\n" << m1 << endl;
+                    break;
 
-    } catch(...) {
-        cerr << "An unexpected error occurred." << endl;
-    }
+                case 10: {
+                    cout << "Creating m3 as a copy of m1..." << endl;
+                    Matrix m3 = m1; // Test copy constructor
+                    cout << "Assigning m1 to m2..." << endl;
+                    m2 = m1; // Test assignment operator
+                    cout << "All matrices are now equal. Modifying m1[0][0] to check deep copy..." << endl;
+                    m1[0][0] = 999.99;
+                    cout << "m1[0][0]: " << m1[0][0] << endl;
+                    cout << "m3[0][0] (should be original): " << m3[0][0] << endl;
+                    break;
+                }
+
+                case 0:
+                    cout << "Exiting program..." << endl;
+                    break;
+
+                default:
+                    cout << "Invalid option. Try again." << endl;
+            }
+        } catch (const char* msg) {
+            cerr << "\n[RUNTIME ERROR]: " << msg << endl;
+        } catch (std::exception& e) {
+            cerr << "\n[EXCEPTION]: " << e.what() << endl;
+        }
+
+    } while (choice != 0);
+
+    return 0;
 }

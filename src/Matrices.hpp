@@ -1,3 +1,6 @@
+#ifndef MATRICES_HPP
+#define MATRICES_HPP
+
 #include <iostream>
 #define MAX_DIM 100
 
@@ -47,7 +50,7 @@ public:
     Matrix operator-(const Matrix &m) const;
     Matrix operator*(const Matrix &m) const;
     Matrix operator+(const Matrix &m) const;
-    
+
 private:
     //Set Dimensions of matrix
     void setDim(int r, int c);
@@ -58,3 +61,5 @@ private:
     int rows;
     int columns;
 };
+
+#endif

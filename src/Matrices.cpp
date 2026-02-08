@@ -88,12 +88,17 @@ void Matrix::capture()
 
 void Matrix::resize(int newRows, int newColumns)
 {
+    int oldRows = this->rows;
+    int oldColumns = this->columns;
     try
     {
-        setDim(newRows, newColumns);
+        if (newRows < 1 || newColumns < 1 || newRows > MAX_DIM || newColumns > MAX_DIM) {
+            throw "Invalid dimensions for resize.";
+        }
+
         double **newMat = new double*[newRows];
-        int minRows = (newRows < rows) ? newRows : rows;
-        int minCols = (newColumns < columns) ? newColumns : columns;
+        int minRows = (newRows < oldRows) ? newRows : oldRows;
+        int minCols = (newColumns < oldColumns) ? newColumns : oldColumns;
 
         for (int i = 0; i < newRows; i++)
         {
@@ -322,6 +327,10 @@ Matrix Matrix::inverse() const {
         {
             if(i != j)
             {
+                if(temp.mat[i][i] == 0)
+                {
+                    throw "Matrix is singular and cannot be inverted.";
+                }
                 double factor = temp.mat[j][i] / temp.mat[i][i];
                 for(int k = 0; k < rows; k++)
                 {
