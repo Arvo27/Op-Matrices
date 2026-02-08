@@ -176,6 +176,12 @@ const double* Matrix::operator[](int i) const {
     }
     return mat[i];
 }
+Matrix Matrix::operator-(const Matrix &m) const {
+    return this->subMatrix(m);
+}
+Matrix Matrix::operator*(const Matrix &m) const {
+    return this->mulMatrix(m);
+}
 
 // Private helper function to copy matrix data
 
@@ -205,4 +211,102 @@ void Matrix::setDim(int r, int c)
         rows = r;
         columns = c;
     }
+}
+
+
+////////////////
+
+// the subtraction of two matrices
+Matrix Matrix::subMatrix(const Matrix &m) const{
+    if(this->rows != m.rows || this->columns != m.columns)
+    {
+        throw "Matrix dimensions do not match for subtraction.";
+    }
+
+    Matrix result(this->rows, this->columns);
+    for(int i = 0; i < this->rows; i++)
+    {
+        for(int j = 0; j < this->columns; j++)
+        {
+            result.mat[i][j] = this->mat[i][j] - m.mat[i][j];
+        }
+    }
+    return result;
+}
+
+
+// Realizar el producto de dos 
+Matrix Matrix::mulMatrix(const Matrix &m) const{
+    if(this->columns != m.rows)
+    {
+        throw "Matrix dimensions do not match for multiplication.";
+    }
+
+    Matrix result(this->rows, m.columns);
+    for(int i = 0; i < this->rows; i++)
+    {
+        for(int j = 0; j < m.columns; j++)
+        {
+            result.mat[i][j] = 0;
+            for(int k = 0; k < this->columns; k++)
+            {
+                result.mat[i][j] += this->mat[i][k] * m.mat[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+// Transpuesta de una matriz
+Matrix Matrix::transpose() const{
+    Matrix result(this->columns, this->rows);
+    for(int i = 0; i < this->rows; i++)
+    {
+        for(int j = 0; j < this->columns; j++)
+        {
+            result.mat[j][i] = this->mat[i][j];
+        }
+    }
+    return result;
+}
+
+Matrix Matrix::inverse() const {
+    if(rows != columns)
+    {
+        throw "Matrix must be square to calculate inverse.";
+    }
+    Matrix result(rows, columns);
+    //Crear una copia de la matriz para no destruir la original
+
+    Matrix temp(*this);
+    for(int i = 0; i < rows; i++)
+    {
+        //Hacer la matriz identidad
+        result.mat[i][i] = 1.0;
+        //Hacer ceros en la columna i
+        for(int j = 0; j < rows; j++)
+        {
+            if(i != j)
+            {
+                double factor = temp.mat[j][i] / temp.mat[i][i];
+                for(int k = 0; k < rows; k++)
+                {
+                    temp.mat[j][k] -= factor * temp.mat[i][k];
+                    result.mat[j][k] -= factor * result.mat[i][k];
+                }
+            }
+        }
+    }
+    
+    //Hacer unos en la diagonal
+    for(int i = 0; i < rows; i++)
+    {
+        double divisor = temp.mat[i][i];
+        for(int j = 0; j < rows; j++)
+        {
+            temp.mat[i][j] /= divisor;
+            result.mat[i][j] /= divisor;
+        }
+    }
+    return result;
 }

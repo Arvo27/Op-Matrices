@@ -33,6 +33,23 @@ int main()
         m1.resize(2, 2);
         cout << m1 << endl;
 
+        //Try subtraction matrix
+        Matrix subtraction = m1 - m2;
+        cout << "Subtraction matrix:" << endl << subtraction << endl;
+
+
+        //Try Product of two matrices
+        Matrix product = m1 * m2;
+        cout << "Product matrix:" << endl << product << endl;
+
+        //Try transpose of matrices
+        Matrix transpose = m1.transpose();
+        cout << "Transpose matrix:" << endl << transpose << endl;
+
+        //Try inverse of matrice
+        Matrix inverse = m2.inverse();
+        cout << "Inverse matrix:" << endl << inverse << endl;
+        
     } catch(const char* msg) {
         cerr << "Error: " << msg << endl;
 

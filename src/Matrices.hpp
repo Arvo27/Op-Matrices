@@ -30,20 +30,22 @@ public:
     void resize(int newRows, int newColumns);
 
     //Matrix operations
-    Matrix sumMatrix(const Matrix& m); // Sum of two matrices
-    Matrix subMatrix(const Matrix& m); // the subtraction of two matrices
-    Matrix mulMatrix(const Matrix& m); // Product of two matrices
-    Matrix mulScalar(double scalar); // Product to scalar
+    Matrix sumMatrix(const Matrix& m); // Sum of two matrices Aram
+    Matrix subMatrix(const Matrix& m) const; // the subtraction of two matrices
+    Matrix mulMatrix(const Matrix& m) const; // Product of two matrices
+    Matrix mulScalar(double scalar); // Product to scalar Aram
 
+    
     //Methods of matrix
-    Matrix transpose(); //The transpose of a matrix
-    Matrix inverse(); // the inverse of a matrix
+    Matrix transpose() const; //The transpose of a matrix
+    Matrix inverse() const; // the inverse of a matrix
 
     //Overloads
     Matrix& operator=(const Matrix& m);
     double* operator[](int i);
     const double* operator[](int i) const;
-
+    Matrix operator-(const Matrix &m) const;
+    Matrix operator*(const Matrix &m) const;
 private:
     //Set Dimensions of matrix
     void setDim(int r, int c);
