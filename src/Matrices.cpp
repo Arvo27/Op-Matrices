@@ -5,7 +5,9 @@
 using std::cout;
 using std::cin;
 using std::sqrt;
-//a
+
+// =======================================================================
+// Constructor and Destructor
 Matrix::Matrix(int r, int c)
 {
     setDim(r, c);
@@ -33,17 +35,8 @@ Matrix::~Matrix()
     delete[] mat;
 }
 
-//Get dimension
-int Matrix::getRows()
-{
-    return rows;
-}
-int Matrix::getColumns()
-{
-    return columns;
-}
-
-//Set element
+// =======================================================================
+//Sets functions
 void Matrix::setElement(int r, int c, double value) {
     if (r < 0 || c < 0 || r >= rows || c >= columns)
     {
@@ -55,7 +48,18 @@ void Matrix::setElement(int r, int c, double value) {
     }
 }
 
-//Get element
+// =======================================================================
+// Get functions
+//Get dimension
+int Matrix::getRows()
+{
+    return rows;
+}
+int Matrix::getColumns()
+{
+    return columns;
+}
+
 double Matrix::getElement(int r, int c) const {
     if (r < 0 || c < 0 || r >= rows || c >= columns)
     {
@@ -67,7 +71,8 @@ double Matrix::getElement(int r, int c) const {
     }
 }
 
-//Capture entries
+// =======================================================================
+// Matrix Manipulations
 void Matrix::capture()
 {
     cout << "Enter matrix entries:\n";
@@ -120,14 +125,14 @@ void Matrix::resize(int newRows, int newColumns)
     }
 }
 
-//Overload >>
+// =======================================================================
+//Overloads
 std::istream& operator>>(std::istream& in, Matrix& m)
 {
     m.capture();
     return in;
 }
 
-//Overload <<
 std::ostream& operator<<(std::ostream& out, const Matrix& m)
 {
     out << "[";
@@ -144,7 +149,6 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m)
     return out;
 }
 
-//Overload =
 Matrix& Matrix::operator=(const Matrix& m)
 {
     if(this != &m)
@@ -161,8 +165,6 @@ Matrix& Matrix::operator=(const Matrix& m)
     }
     return *this;
 }
-
-//Overload []
 double* Matrix::operator[](int i)
 {
     if (i < 0 || i >= rows){ 
@@ -176,6 +178,9 @@ const double* Matrix::operator[](int i) const {
     }
     return mat[i];
 }
+Matrix Matrix::operator+(const Matrix &m) const {
+    return this->sumMatrix(m);
+}
 Matrix Matrix::operator-(const Matrix &m) const {
     return this->subMatrix(m);
 }
@@ -183,6 +188,7 @@ Matrix Matrix::operator*(const Matrix &m) const {
     return this->mulMatrix(m);
 }
 
+// =======================================================================
 // Private helper function to copy matrix data
 
 void Matrix::copyFrom(const Matrix& m)
@@ -214,9 +220,25 @@ void Matrix::setDim(int r, int c)
 }
 
 
-////////////////
+// =======================================================================
+// Matrix Operations
 
-// the subtraction of two matrices
+Matrix Matrix::sumMatrix(const Matrix &m) const {
+    if(this->rows != m.rows || this->columns != m.columns)
+    {
+        throw "Matrix dimensions do not match for addition.";
+    }
+    Matrix result(this->rows, this->columns);
+    for(int i = 0 ; i < this->rows; i++)
+    {
+        for(int j = 0; j < this->columns; j++)
+        {
+            result.mat[i][j] = this->mat[i][j] + m.mat[i][j];
+        }
+    }
+    return result;
+}
+
 Matrix Matrix::subMatrix(const Matrix &m) const{
     if(this->rows != m.rows || this->columns != m.columns)
     {
@@ -234,8 +256,6 @@ Matrix Matrix::subMatrix(const Matrix &m) const{
     return result;
 }
 
-
-// Realizar el producto de dos 
 Matrix Matrix::mulMatrix(const Matrix &m) const{
     if(this->columns != m.rows)
     {
@@ -257,7 +277,21 @@ Matrix Matrix::mulMatrix(const Matrix &m) const{
     return result;
 }
 
-// Transpuesta de una matriz
+Matrix Matrix::operator*(double scalar) const {
+    Matrix result(rows, columns);
+    for(int i = 0; i < rows; i++) {
+        for(int j = 0; j < columns; j++) {
+            result.mat[i][j] = mat[i][j] * scalar;
+        }
+    }
+    return result;
+}
+Matrix operator*(double scalar, const Matrix &m) {
+    return m * scalar; 
+}
+
+// ==============================================================================
+// Methods of Matrix
 Matrix Matrix::transpose() const{
     Matrix result(this->columns, this->rows);
     for(int i = 0; i < this->rows; i++)
@@ -297,7 +331,7 @@ Matrix Matrix::inverse() const {
             }
         }
     }
-    
+
     //Hacer unos en la diagonal
     for(int i = 0; i < rows; i++)
     {

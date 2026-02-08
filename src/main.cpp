@@ -33,6 +33,10 @@ int main()
         m1.resize(2, 2);
         cout << m1 << endl;
 
+        //Try Sum matrix
+        Matrix sum = m1 + m2;
+        cout << "Sum matrix:" << endl << sum << endl;
+
         //Try subtraction matrix
         Matrix subtraction = m1 - m2;
         cout << "Subtraction matrix:" << endl << subtraction << endl;
@@ -49,7 +53,13 @@ int main()
         //Try inverse of matrice
         Matrix inverse = m2.inverse();
         cout << "Inverse matrix:" << endl << inverse << endl;
-        
+
+        //Ahora probar el producto escalar
+        double escalar = 2;
+        Matrix escalarM = escalar * m1;
+        cout << "Escalar matrix:" << endl << escalarM << endl;
+
+
     } catch(const char* msg) {
         cerr << "Error: " << msg << endl;
 

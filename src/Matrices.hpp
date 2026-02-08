@@ -2,8 +2,8 @@
 #define MAX_DIM 100
 
 class Matrix {
-
     //Friend functions
+    friend Matrix operator*(double scalar, const Matrix &m);
     friend std::istream& operator>>(std::istream& in, Matrix& m);
     friend std::ostream& operator<<(std::ostream& out, const Matrix& m);
 
@@ -30,10 +30,10 @@ public:
     void resize(int newRows, int newColumns);
 
     //Matrix operations
-    Matrix sumMatrix(const Matrix& m); // Sum of two matrices Aram
+    Matrix sumMatrix(const Matrix& m) const; // Sum of two matrices
     Matrix subMatrix(const Matrix& m) const; // the subtraction of two matrices
     Matrix mulMatrix(const Matrix& m) const; // Product of two matrices
-    Matrix mulScalar(double scalar); // Product to scalar Aram
+    Matrix operator*(double scalar) const; // Product to scalar
 
     
     //Methods of matrix
@@ -46,6 +46,8 @@ public:
     const double* operator[](int i) const;
     Matrix operator-(const Matrix &m) const;
     Matrix operator*(const Matrix &m) const;
+    Matrix operator+(const Matrix &m) const;
+    
 private:
     //Set Dimensions of matrix
     void setDim(int r, int c);
