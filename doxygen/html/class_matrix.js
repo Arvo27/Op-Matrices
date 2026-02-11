@@ -1,0 +1,27 @@
+var class_matrix =
+[
+    [ "Matrix", "class_matrix.html#aebea30c5d2284d2a1d5ae0d1b7dc6dfa", null ],
+    [ "Matrix", "class_matrix.html#a765f4dcb51b6829311cc3e7576388423", null ],
+    [ "~Matrix", "class_matrix.html#a9b1c3627f573d78a2f08623fdfef990f", null ],
+    [ "capture", "class_matrix.html#ad00be3a229b11d1c5ea51e40648c6c86", null ],
+    [ "getColumns", "class_matrix.html#a324b4057cd6e2167687e406abd720020", null ],
+    [ "getElement", "class_matrix.html#a1e7f74eafdd6ba88449bfd4ffb6d5ff8", null ],
+    [ "getRows", "class_matrix.html#a756736b31a372037de52b9ed83bc06b3", null ],
+    [ "inverse", "class_matrix.html#aab07edad1c28dbd2b521bf195d33cb06", null ],
+    [ "mulMatrix", "class_matrix.html#a2ffc3e1aea2d0f0ff36e80d2e2e6e6d5", null ],
+    [ "operator*", "class_matrix.html#a537594e2800c06bb4875027197506d2b", null ],
+    [ "operator*", "class_matrix.html#a662b9a90c4bd26115df878eafd8965b9", null ],
+    [ "operator+", "class_matrix.html#adde4dfb32b2d17559ea6539510e1690e", null ],
+    [ "operator-", "class_matrix.html#a6ffeb9b34bc9e535b513aaf3cc6c3e5b", null ],
+    [ "operator=", "class_matrix.html#aea5a06385f646eb4a63929fae6fa3e14", null ],
+    [ "operator[]", "class_matrix.html#a28f3ae2a31b6e879b737317f871f4731", null ],
+    [ "operator[]", "class_matrix.html#a9d981e97582e6730c1d17bc313e5d52b", null ],
+    [ "resize", "class_matrix.html#afea917ba977bdb0f254fbc046200619b", null ],
+    [ "setElement", "class_matrix.html#ab0e800266d8d36fab0fc22ec8d95eff1", null ],
+    [ "subMatrix", "class_matrix.html#ae1d87f5ef63fff7c8f41277e4a031f2c", null ],
+    [ "sumMatrix", "class_matrix.html#af766de5427babfa4c7600377456792ec", null ],
+    [ "transpose", "class_matrix.html#a759661b75b9681f3a89ff75e27933b3a", null ],
+    [ "operator*", "class_matrix.html#acfe7803511c004b4bdf277d66ddd98bf", null ],
+    [ "operator<<", "class_matrix.html#a7d9d787d8259e2a1eaa5dc9f6e200392", null ],
+    [ "operator>>", "class_matrix.html#a9b776e879269023ddadc9e2a1c593519", null ]
+];
