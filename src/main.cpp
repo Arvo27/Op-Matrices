@@ -42,6 +42,7 @@ enum MenuOption {
     INVERSE,            ///< Calculate the inverse of m1 (square matrices only)
     RESIZE,             ///< Resize matrix m1
     ASSIGN_TEST         ///< Test assignment and copy (deep copy test)
+    GET_SET_TEST        ///< Test direct access (getElement / setElement)
 };
 */
 
@@ -63,6 +64,7 @@ void displayMenu() {
     cout << "8.  Inverse of m1 (Square matrices only)" << endl;
     cout << "9.  Resize m1" << endl;
     cout << "10. Test Assignment and Copy (Deep Copy Test)" << endl;
+    cout << "11. Test Direct Access (getElement / setElement)" << endl;
     cout << "0.  Exit" << endl;
     cout << "Select an option: ";
 }
@@ -104,8 +106,9 @@ int main() {
                     break;
 
                 case 2:
-                    cout << "Matrix 1:\n" << m1 << endl;
-                    cout << "Matrix 2:\n" << m2 << endl;
+                    // Displaying matrices along with their dimensions using getters
+                    cout << "Matrix 1 (" << m1.getRows() << "x" << m1.getColumns() << "):\n" << m1 << endl;
+                    cout << "Matrix 2 (" << m2.getRows() << "x" << m2.getColumns() << "):\n" << m2 << endl;
                     break;
 
                 case 3:
@@ -125,9 +128,15 @@ int main() {
 
                 case 6:
                     cout << "Enter scalar value: ";
-                    cin >> scalar;
-                    // Commutative scalar multiplication
-                    cout << "Result (" << scalar << " * m1):\n" << (scalar * m1) << endl;
+                    if (!(cin >> scalar)) {
+                        throw "Invalid scalar input.";
+                    }
+                    
+                    // Calculation for Matrix * scalar
+                    cout << "\nMatrix * scalar = \n" << (m1 * scalar) << endl;
+                    
+                    // Calculation for scalar * Matrix (Testing commutativity)
+                    cout << "\nscalar * Matrix = \n" << (scalar * m1) << endl;
                     break;
 
                 case 7:
@@ -155,6 +164,29 @@ int main() {
                     m1[0][0] = 999.99;
                     cout << "m1[0][0]: " << m1[0][0] << endl;
                     cout << "m3[0][0] (should be original): " << m3[0][0] << endl;
+                    break;
+                }
+                case 11: {
+                    // Explicit test for getElement and setElement
+                    cout << "--- Direct Access Test (Getter/Setter) ---" << endl;
+                    cout << "Enter row and column for Matrix 1: ";
+                    int tr, tc;
+                    cin >> tr >> tc;
+                    
+                    try {
+                        double currentVal = m1.getElement(tr, tc);
+                        cout << "Current value at (" << tr << "," << tc << ") is: " << currentVal << endl;
+                        
+                        cout << "Enter new value: ";
+                        double newVal;
+                        cin >> newVal;
+                        
+                        m1.setElement(tr, tc, newVal);
+                        cout << "Value updated successfully." << endl;
+                        cout << "New Matrix 1:\n" << m1 << endl;
+                    } catch (const char* msg) {
+                        cerr << "Access Error: " << msg << endl;
+                    }
                     break;
                 }
 
